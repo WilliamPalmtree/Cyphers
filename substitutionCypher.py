@@ -1,12 +1,20 @@
-def letterSub(str, key):
-	for ch in str:
-		if (ord(ch) + key > 122):
-			print(ord(ch)+key)
-			str = chr(ord(ch) + key - 26)
-		else:
-			str = chr(ord(ch) + key)
-			print(ord(ch)+key)
-	print(str)
+# LetterSub takes a character and a key and returns a character
+# shifted by the key amount
+def letterSub(letter, key):
+
+	if (ord(letter) + key > 122):
+		print(ord(letter)+key)
+		letter = chr(ord(letter) + key - 26)
+	else:
+		letter = chr(ord(letter) + key)
+		print(ord(letter)+key)
+	print(letter)
+
+
+# Encode messages takes the message and the key value and returns 
+# the encoded string
+def encodeMessage(message, key):
+
 # key = input("Please input a number key ")
 # key = 13
 # print("Your key is" + str(key))
