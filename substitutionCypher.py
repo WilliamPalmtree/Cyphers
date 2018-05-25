@@ -11,6 +11,7 @@ def letterSub(letter, key):
 		else:
 			letter = chr(ord(letter) + key)
 	elif (ord(letter) > 64 and ord(letter) < 91):
+		# Uppercase
 		if (ord(letter) + key > 90):
 			letter = chr(ord(letter) + key - 26)
 		elif(ord(letter) + key < 65):
@@ -18,6 +19,7 @@ def letterSub(letter, key):
 		else:
 			letter = chr(ord(letter) + key)
 	elif (ord(letter) < 65 and ord(letter) > 31):
+		# symbols and numbers
 		if (ord(letter) + key > 64):
 			letter = chr(ord(letter) + key - 32)
 		elif(ord(letter) + key < 32):
@@ -43,12 +45,12 @@ def decodeMessage(encodedMessage, key):
 		newDecodeLetter = letterSub(ch, -key)
 		decodedMessage = decodedMessage + newDecodeLetter
 	print(decodedMessage)
-# key = input("Please input a number key ")
-# key = 13
-# print("Your key is" + str(key))
-# message = input("Now please type your message:")
-message = "This is my awesome encoded message"
-# letter = character 1 of message
-letter = "t"
-encodeMessage(message, 12)
-decodeMessage(encodedMessage, 12)
+ED = input("Would you like to encode or decode?")
+key = input("Please input a number key ")
+print("Your key is" + str(key))
+message = input("Now please type your message:")
+ED = input("Would you like to encode or decode?")
+if(ED == encode):
+	encodeMessage(message, key)
+if(ED == decode):
+	decodeMessage(message, key)
