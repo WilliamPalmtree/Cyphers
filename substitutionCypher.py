@@ -45,12 +45,11 @@ def decodeMessage(encodedMessage, key):
 		newDecodeLetter = letterSub(ch, -key)
 		decodedMessage = decodedMessage + newDecodeLetter
 	print(decodedMessage)
-ED = input("Would you like to encode or decode?")
-key = input("Please input a number key ")
-print("Your key is" + str(key))
-message = input("Now please type your message:")
-ED = input("Would you like to encode or decode?")
-if(ED == encode):
-	encodeMessage(message, key)
-if(ED == decode):
-	decodeMessage(message, key)
+key = input("Please input a number key: ")
+print("Your key is " + str(key))
+message = raw_input("Now please type your message: ")
+ED = raw_input("Would you like to encode or decode? ")
+if(ED == "encode"):
+	print(encodeMessage(message, key))
+if(ED == "decode"):
+	print(decodeMessage(message, key))
