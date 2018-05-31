@@ -31,6 +31,6 @@ def keyGenerator(key):
 	print(codeArray)
 	return codeArray
 def encodeMessage(message, key):
-	print "hello"
+	bimessage = 
 
-keyGenerator("hello")
+keyGenerator("helo")
