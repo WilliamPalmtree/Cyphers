@@ -19,7 +19,7 @@ def keyGenerator(key):
 	key = key + "abcdefghiklmnopqrstuvwxyz"
 	arX = 0
 	arY = 0
-	codeArray = [["","","","",""],["","","","",""],["","","","",""],["","","","",""],["","","","",""]]
+	codeArray = np.empty((5,5,), dtype='a1')
 	for ch in key:
 		if (arX > 4):
 			arX = arX - 5
@@ -31,25 +31,54 @@ def keyGenerator(key):
 	print(codeArray)
 	return codeArray
 def bimessage(message):
-	count = 0
-	newMessage = []
-	for ch in message:
-		if(count == 1):
-			count = 0
-			newLetter = new Letter + ", " ch
-			newMessage.append(tuple(newLetter))
-			print(newMessage)
-		else:
-			newLetter = ch
-		count = count + 1
-	return(newMessage)
+	l = len(message)
+	if l % 2 == 1:
+		message += 'x'
+
+	out = []
+	for n in range(0, len(message), 2):
+		out.append(message[n:n+2])
+
+	return out
+	# count = 0
+	# newMessage = []
+	# for ch in message:
+	# 	if(count == 1):
+	# 		count = 0
+	# 		newLetter = newLetter + ch
+	# 		newMessage.append(tuple(newLetter))
+	# 		print(newMessage)
+	# 		newLetter = ""
+	# 	else:
+	# 		newLetter = ch
+	# 		count = count + 1
+
+	# return(newMessage)
+
 def encodeMessage(message, key):
-<<<<<<< HEAD
-	bimessage = 
+	keyA = keyGenerator(key)
+	startEncode = bimessage(message)
+	# for index in array?
+	finishedEncode = ""
 
-keyGenerator("helo")
-=======
+	print(keyA)
+	for item in startEncode:
+		index1, = zip(*np.where(keyA == item[0]))
+		index2, = zip(*np.where(keyA == item[1]))
+		i_final1 = None
+		i_final2 = None
+		if(index1[0] == index2[0]):
+			i_final1 = ((index1[0] + 1)%5, index1[1])
+			i_final2 = ((index2[0] + 1)%5, index2[1])
+		if(index1[1] == index2[1]):
+			i_final1 = (index1[0],(index1[1] + 1)%5)
+			i_final2 = (index2[0],(index2[1] + 1)%5)
+		else:
+			i_final1 = (index2[0],index1[1])
+			i_final2 = (index1[0],index2[1])
+		letter1 = keyA[i_final1]
+		letter2 = keyA[i_final2]
+		finishedEncode = finishedEncode + letter1 + letter2
+	return finishedEncode
 
-
-keyGenerator("hello")
->>>>>>> 0e44548bfdcd397d827d542ab5eb2f9e3b9fcef5
+print(encodeMessage("message", "hello"))
