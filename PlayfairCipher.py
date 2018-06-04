@@ -1,4 +1,5 @@
 import numpy as np
+
 def getIndex(character):
 	if (ord(character) > 64 and ord(character) < 91):
 		character = chr(ord(character) + 32)
@@ -6,6 +7,7 @@ def getIndex(character):
 		character = chr(ord(character) - 1)
 	character = ord(character)-97
 	return character // 5, character % 5
+
 def checkIfUsed(character,alphaArray):
 	
 	dex = getIndex(character)
@@ -14,6 +16,7 @@ def checkIfUsed(character,alphaArray):
 		return 0
 	else:
 		return 1
+
 def keyGenerator(key):
 	alphaArray = np.zeros((5,5,))
 	key = key + "abcdefghiklmnopqrstuvwxyz"
@@ -40,20 +43,7 @@ def bimessage(message):
 		out.append(message[n:n+2])
 
 	return out
-	# count = 0
-	# newMessage = []
-	# for ch in message:
-	# 	if(count == 1):
-	# 		count = 0
-	# 		newLetter = newLetter + ch
-	# 		newMessage.append(tuple(newLetter))
-	# 		print(newMessage)
-	# 		newLetter = ""
-	# 	else:
-	# 		newLetter = ch
-	# 		count = count + 1
-
-	# return(newMessage)
+	
 
 def encodeMessage(message, key):
 	keyA = keyGenerator(key)
@@ -81,4 +71,50 @@ def encodeMessage(message, key):
 		finishedEncode = finishedEncode + letter1 + letter2
 	return finishedEncode
 
+def decodeMessage(message, key):
+	keyA = keyGenerator(key)
+	startDecode = bimessage(message)
+	# for index in array?
+	finishedDecode = ""
+
+	print(keyA)
+	for item in startDecode:
+		index1, = zip(*np.where(keyA == item[0]))
+		index2, = zip(*np.where(keyA == item[1]))
+		i_final1 = None
+		i_final2 = None
+		if(index1[0] == index2[0]):
+			if(index1[0] - 1 < 0 and index2[0] - 1 > 0):
+				i_final1 = ((index1[0] + 4)%5, index1[1])
+				i_final2 = ((index2[0] - 1)%5, index2[1])
+			elif(index2[0] - 1 < 0 and index1[0] - 1 > 0):
+				i_final2 = ((index2[0] + 4)%5, index2[1])
+				i_final1 = ((index1[0] - 1)%5, index1[1])
+			elif(index2[0] - 1 < 0 and index1[0] - 1 < 0):
+				i_final1 = ((index1[0] + 4)%5, index1[1])
+				i_final2 = ((index2[0] + 4)%5, index2[1])
+			else:
+				i_final1 = ((index1[0] - 1)%5, index1[1])
+				i_final2 = ((index2[0] - 1)%5, index2[1])
+		if(index1[1] == index2[1]):
+			if(index1[1] - 1 < 0 and index2[1] - 1 > 0):
+				i_final1 = ((index1[0]), index1[1] + 4)
+				i_final2 = (index2[0],(index2[1] - 1)%5)
+			elif(index2[1] - 1 < 0 and index1[1] - 1 > 0):
+				i_final2 = ((index1[0]), index2[1] + 4)
+				i_final1 = (index1[0],(index1[1] - 1)%5)
+			elif(index2[1] - 1 < 0 and index1[1] - 1 < 0):
+				i_final1 = ((index1[0], index1[1] + 4))
+				i_final2 = ((index2[0], index2[1] + 4))
+			else:
+				i_final1 = (index1[0],(index1[1] - 1)%5)
+				i_final2 = (index2[0],(index2[1] - 1)%5)
+		else:
+			i_final1 = (index2[0],index1[1])
+			i_final2 = (index1[0],index2[1])
+		letter1 = keyA[i_final1]
+		letter2 = keyA[i_final2]
+		finishedDecode = finishedDecode + letter1 + letter2
+	return finishedDecode
 print(encodeMessage("message", "hello"))
+print(decodeMessage("lktthbwl", "hello"))
